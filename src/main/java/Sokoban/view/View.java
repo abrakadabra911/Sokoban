@@ -7,6 +7,8 @@ import Sokoban.model.GameObjects;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 
 public class View extends JFrame {
@@ -151,13 +153,23 @@ public class View extends JFrame {
 
         JMenuItem menuItemAbout = new JMenuItem(new AbstractAction("About") {
             public void actionPerformed(ActionEvent ae) {
-
-                JOptionPane.showMessageDialog(null,
+               final String link = "https://github.com/abrakadabra911/Sokoban";
+                JLabel label = new JLabel("<html>" +
                         "This Sokoban-game was created by Aliaksei Zayats, using some java " +
-                                "\ntechnologies and patterns like: Maven, MVC, embedded database H2 (for game progress)." +
-                                "\nAll the source code you can find at: " +
-                                "\n<html><a href=\"https://github.com/abrakadabra911/Aleksy_tests/tree/master/src/main/java/Sokoban\">https://github.com/abrakadabra911/Aleksy_tests/tree/master/src/main/java/Sokoban</a></html>" +
-                                "\nemail: aliaksei.zayats@gmail.com", "About", JOptionPane.INFORMATION_MESSAGE);
+                                "<br/>technologies and patterns like: Maven, MVC, embedded database H2 (for game progress)." +
+                                "<br/>email: aliaksei.zayats@gmail.com" +
+                                "<br/>All the source code you can find at: <u>"
+                                +link+"</u></html>",JLabel.CENTER);
+
+                label.addMouseListener(new MouseAdapter(){
+                    public void mousePressed(MouseEvent me){
+                        try{
+                            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler "+link);
+                        }catch(Exception e){e.printStackTrace();}
+                    }
+                });
+
+                JOptionPane.showMessageDialog(null, label, "About", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         menuItemAbout.setText("About");
