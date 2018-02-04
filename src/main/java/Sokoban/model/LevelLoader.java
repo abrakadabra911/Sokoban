@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Set;
 
 public class LevelLoader {
+
     private URL levels;
 
     public LevelLoader(URL levels) {
         this.levels = levels;
     }
 
+    // loading certain level (game objects) from URL - txt file
     public GameObjects getLevel(int level) {
         Set walls = new HashSet();
         Set boxes = new HashSet();
@@ -24,7 +26,6 @@ public class LevelLoader {
         Player player = new Player(200, 200);
 
         List<String> allLines = new ArrayList<>();
-
 
             try {
                 BufferedReader in = new BufferedReader(new InputStreamReader(levels.openStream()));
@@ -40,7 +41,7 @@ public class LevelLoader {
             }
 
             int maxLevel = 0;
-            for (Integer x : listOfLevelNumbers(allLines)) {  // maximum number of level
+            for (Integer x : listOfLevelNumbers(allLines)) {                    // maximum number of level
                 if (x > maxLevel) maxLevel = x;
             }
 
@@ -56,7 +57,7 @@ public class LevelLoader {
                     while (!allLines.get(j).equals("*************************************")) {
                         char[] chars = allLines.get(j).toCharArray();
                         for (char character : chars) {
-                            switch (character) {  // Символ ‘X’ – означает стену, ‘*’ - ящик, ‘.’ – дом, ‘&’ – ящик который стоит в доме, а ‘@’ - игрока.
+                            switch (character) {  // Chars: ‘X’ wall, ‘*’ box, ‘.’home, ‘&’ box at home, ‘@’ player.
                                 case 'X':
                                     walls.add(new Wall(x, y));
                                     break;
@@ -84,9 +85,7 @@ public class LevelLoader {
                     }
                 }
             }
-
-        GameObjects allGameObjects = new GameObjects(walls, boxes, homes, player);
-        return allGameObjects;
+        return new GameObjects(walls, boxes, homes, player);
     }
 
     private List<Integer> listOfLevelNumbers(List<String> listOfLines) {

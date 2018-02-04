@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class Player extends CollisionObject implements Movable {
+
     private static BufferedImage imageLeft;
     private static BufferedImage imageRight;
     private static BufferedImage imageUp;
@@ -13,12 +14,10 @@ public class Player extends CollisionObject implements Movable {
 
     private BufferedImage image = imageDown;
 
-    private boolean rotatedToLeft = false;
-
-    private String RESOURCE_PATH_LEFT = getClass().getPackage().getName()
+    private String RESOURCE_PATH_LEFT =
+            getClass().getPackage().getName()
             .replaceAll("\\.", "/")
             .replace("Sokoban/model", "pic/player_left.png");
-
 
     private String RESOURCE_PATH_RIGHT = getClass().getPackage().getName()
             .replaceAll("\\.", "/")
@@ -43,10 +42,6 @@ public class Player extends CollisionObject implements Movable {
             imageUp = ImageIO.read(url3);
             final URL url4 = getClass().getClassLoader().getResource(RESOURCE_PATH_DOWN);
             imageDown = ImageIO.read(url4);
-          /*  imageLeft = ImageIO.read(new File(getClass().getClassLoader()   - working only within IDE
-                    .getResource(RESOURCE_PATH_LEFT).toURI()));
-            imageRight = ImageIO.read(new File(getClass().getClassLoader()    - working only within IDE
-                    .getResource(RESOURCE_PATH_RIGHT).toURI()));*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +52,6 @@ public class Player extends CollisionObject implements Movable {
         int width = Model.FIELD_CELL_SIZE;
         graphics.drawImage(image, getX() - width / 2, getY() - width / 2, null);
     }
-
 
     @Override
     public void move(int x, int y) {
@@ -70,21 +64,21 @@ public class Player extends CollisionObject implements Movable {
         int x = 0, y = 0;
         if (direction == Direction.UP) {
             x = 0;
-            y = -Model.FIELD_CELL_SIZE;
+            y = - Model.FIELD_CELL_SIZE;
             image = imageUp;
         }
         if (direction == Direction.DOWN) {
             x = 0;
-            y = +Model.FIELD_CELL_SIZE;
+            y = + Model.FIELD_CELL_SIZE;
             image = imageDown;
         }
         if (direction == Direction.LEFT) {
-            x = -Model.FIELD_CELL_SIZE;
+            x = - Model.FIELD_CELL_SIZE;
             y = 0;
             image = imageLeft;
         }
         if (direction == Direction.RIGHT) {
-            x = Model.FIELD_CELL_SIZE;
+            x = + Model.FIELD_CELL_SIZE;
             y = 0;
             image = imageRight;
         }

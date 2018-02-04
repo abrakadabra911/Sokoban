@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class GameObjects {
+
     private Set<Wall> walls;
     private Set<Box> boxes;
     private Set<Home> homes;
@@ -33,7 +34,7 @@ public class GameObjects {
     }
 
     public Set<GameObject> getAll() {
-        Set allGameObjects = new HashSet();
+        Set<GameObject> allGameObjects = new HashSet<>();
         allGameObjects.addAll(walls);
         allGameObjects.addAll(boxes);
         allGameObjects.addAll(homes);

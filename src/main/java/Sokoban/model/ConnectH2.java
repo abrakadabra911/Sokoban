@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConnectH2 {
+
     public static Connection conn;
     private static final String DB_DRIVER = "org.h2.Driver";
     private static final String DB_CONNECTION = "jdbc:h2:~/sokobanDB";
@@ -25,12 +26,14 @@ public class ConnectH2 {
         }
     }
 
+    // creates table if not exists and printing all data in command line
     public void testDatabase() {
         try {
             conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             Statement st = conn.createStatement();
 
-            String CreateQuery = "CREATE TABLE IF NOT EXISTS MAIN_TABLE(" +
+            String CreateQuery =
+                    "CREATE TABLE IF NOT EXISTS MAIN_TABLE(" +
                     " USER VARCHAR(50) NOT NULL," +
                     " PASSWORD VARCHAR(50) NOT NULL," +
                     " LAST_LEVEL VARCHAR(50) NOT NULL)";
@@ -44,13 +47,13 @@ public class ConnectH2 {
                         result.getString("LAST_LEVEL"));
             }
             st.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             try {
                 conn.close();
             } catch (SQLException s) {
+                s.printStackTrace();
             }
         }
     }
@@ -61,7 +64,10 @@ public class ConnectH2 {
         try {
             conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             Statement st = conn.createStatement();
-            String LevelQuery = "SELECT LAST_LEVEL FROM MAIN_TABLE WHERE USER='" + user + "' AND PASSWORD='" + password + "'";
+            String LevelQuery =
+                    "SELECT LAST_LEVEL FROM MAIN_TABLE " +
+                            "WHERE USER='" + user + "' " +
+                            "AND PASSWORD='" + password + "'";
             ResultSet rs = st.executeQuery(LevelQuery);
             while (rs.next()) {
                 lastLevel = rs.getString("LAST_LEVEL");
@@ -83,13 +89,17 @@ public class ConnectH2 {
             conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             Statement st = conn.createStatement();
 
-            ResultSet result = st.executeQuery("SELECT USER FROM MAIN_TABLE WHERE USER='" + user + "'");
+            ResultSet result = st.executeQuery(
+                    "SELECT USER FROM MAIN_TABLE " +
+                            "WHERE USER='" + user + "'");
             if (!result.next()) {
-                st.execute("INSERT INTO MAIN_TABLE (USER, PASSWORD, LAST_LEVEL) VALUES ('"+user+"', '"+password+"', '1')");
+                st.execute(
+                        "INSERT INTO MAIN_TABLE " +
+                                "(USER, PASSWORD, LAST_LEVEL) VALUES " +
+                                "('"+user+"', '"+password+"', '1')");
                 created = true;
             }
             st.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -106,9 +116,15 @@ public class ConnectH2 {
             conn = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
             Statement st = conn.createStatement();
 
-            ResultSet result = st.executeQuery("SELECT USER FROM MAIN_TABLE WHERE USER='" + user + "'");
+            ResultSet result = st.executeQuery(
+                    "SELECT USER FROM MAIN_TABLE " +
+                            "WHERE USER='" + user + "'");
             if (result.next()) {
-                st.execute("UPDATE MAIN_TABLE SET LAST_LEVEL = '"+level+"' WHERE USER = '"+user+"' AND PASSWORD = '"+password+"'");
+                st.execute(
+                        "UPDATE MAIN_TABLE " +
+                                "SET LAST_LEVEL = '"+level+"' " +
+                                "WHERE USER = '"+user+"' " +
+                                "AND PASSWORD = '"+password+"'");
             }
             result = st.executeQuery("SELECT * FROM MAIN_TABLE");
             while (result.next()) {
@@ -118,7 +134,6 @@ public class ConnectH2 {
                                 result.getString("LAST_LEVEL"));
             }
             st.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

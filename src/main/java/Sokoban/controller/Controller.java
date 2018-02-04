@@ -57,6 +57,7 @@ public class Controller implements EventListener {
         return model.getGameObjects();
     }
 
+    // permit to clear DataBase
     public void adminClearDB() {
         model.adminClearDB();
     }

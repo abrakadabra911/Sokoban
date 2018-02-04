@@ -10,13 +10,14 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 public class Model {
+
     public static Logger logger = Logger.getLogger(Model.class.getName()); // for logger use (not used)
     static FileHandler fh;                                                 // for logger use (not used)
 
     static {
         try {
-            // This block configure the logger with handler and formatter // for logger use (not used)
-            fh = new FileHandler("E:/MyJava/MyLogFile.log");
+            // This block configure the logger with handler and formatter  // for logger use (not used)
+            fh = new FileHandler("C:/SokobanLogger.log");
             logger.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
@@ -27,11 +28,11 @@ public class Model {
         }
     }
 
-    public Model(){ H2database = new ConnectH2();}
+    public Model() { H2database = new ConnectH2();}
 
-    public static final int FIELD_CELL_SIZE = 20; //dimention of game cell
+    static final int FIELD_CELL_SIZE = 20; // dimension of game cell
 
-    EventListener eventListener;
+    private EventListener eventListener;
 
     private GameObjects gameObjects;
 
@@ -43,11 +44,11 @@ public class Model {
 
     private String password = "";
 
-    public String RESOURCE_PATH = getClass().getPackage().getName()
+    private String RESOURCE_PATH = getClass().getPackage().getName()
             .replaceAll("\\.", "/")
             .replace("Sokoban/model", "res/levels.txt");
 
-    public URL getLevelsUrl() {
+    private URL getLevelsUrl() {
         URL url = getClass().getClassLoader().getResource(RESOURCE_PATH);
         return url;
    }
@@ -70,7 +71,7 @@ public class Model {
         return gameObjects;
     }
 
-    public void restartLevel(int level) {
+    private void restartLevel(int level) {
         gameObjects = levelLoader.getLevel(level);
     }
 
@@ -92,14 +93,14 @@ public class Model {
         checkCompletion();
     }
 
-    public boolean checkWallCollision(CollisionObject gameObject, Direction direction) {
+    private boolean checkWallCollision(CollisionObject gameObject, Direction direction) {
         for (Wall wall : getGameObjects().getWalls()) {
             if (gameObject.isCollision(wall, direction)) return true;
         }
         return false;
     }
 
-    public boolean checkBoxCollisionAndMoveIfAvaliable(Direction direction) {
+    private boolean checkBoxCollisionAndMoveIfAvaliable(Direction direction) {
         Player player = getGameObjects().getPlayer();
         for (Box box : getGameObjects().getBoxes()) {
             if (player.isCollision(box, direction) && (checkBoxCollision(box, direction) || checkWallCollision(box, direction)))
@@ -114,14 +115,14 @@ public class Model {
         return false;
     }
 
-    public boolean checkBoxCollision(CollisionObject gameObject, Direction direction) {
+    private boolean checkBoxCollision(CollisionObject gameObject, Direction direction) {
         for (GameObject box : getGameObjects().getBoxes()) {
             if (gameObject.isCollision(box, direction)) return true;
         }
         return false;
     }
 
-    public void checkCompletion() {
+    private void checkCompletion() {
         boolean isBoxPresent;
         for (GameObject home : getGameObjects().getHomes()) {
             isBoxPresent = false;
@@ -136,6 +137,7 @@ public class Model {
         eventListener.levelCompleted(currentLevel);
     }
 
+    // permit to clear DataBase
     public void adminClearDB() {
         H2database.adminClearDB();
     }

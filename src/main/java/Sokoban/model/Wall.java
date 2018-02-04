@@ -6,8 +6,10 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class Wall extends CollisionObject {
+
     private static BufferedImage image;
-    private  String RESOURCE_PATH =  getClass().getPackage().getName()
+    private  String RESOURCE_PATH =
+            getClass().getPackage().getName()
             .replaceAll("\\.", "/")
             .replace("Sokoban/model", "pic/wall1.jpg");
 

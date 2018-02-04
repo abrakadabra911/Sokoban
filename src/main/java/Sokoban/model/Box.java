@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class Box extends CollisionObject implements Movable{
+
     private static BufferedImage image;
     private  String RESOURCE_PATH =  getClass().getPackage().getName()
             .replaceAll("\\.", "/")

@@ -1,11 +1,12 @@
 package Sokoban.model;
 
 public abstract class CollisionObject extends GameObject {
+
     public CollisionObject(int x, int y) {
         super(x, y);
     }
 
-    public boolean isCollision(GameObject gameObject, Direction direction) {
+     boolean isCollision(GameObject gameObject, Direction direction) {
         int newX = this.getX();
         int newY = this.getY();
         if (direction.equals(Direction.DOWN)) {

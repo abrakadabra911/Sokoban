@@ -3,6 +3,7 @@ package Sokoban.model;
 import java.awt.*;
 
 public abstract class GameObject  {
+
     private int x, y, width, height;
 
     public GameObject(int x, int y) {

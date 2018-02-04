@@ -12,10 +12,11 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 
 public class View extends JFrame {
+
     private Controller controller;
     private Field field;
     private int level;
-    private String RESOURCE_PATH = getClass().getPackage().getName()  //  path to IconImage;
+    private String RESOURCE_PATH = getClass().getPackage().getName()            //  path to IconImage;
             .replaceAll("\\.", "/")
             .replace("Sokoban/view", "pic/icon.png");
 
@@ -23,14 +24,15 @@ public class View extends JFrame {
         this.controller = controller;
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            //  setIconImage(image);
             final URL url = getClass().getClassLoader().getResource(RESOURCE_PATH);
             ImageIcon image = new ImageIcon(url);
-            setIconImage(image.getImage());
+            setIconImage(image.getImage());                                     //  setIconImage(image);
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
+    // login dialog, initialize main frame: sizes and head
     public void init() {
         loginDialog();
         field = new Field(this);
@@ -72,13 +74,14 @@ public class View extends JFrame {
         controller.startNextLevel();
     }
 
+    // clear database if username is "admin"
     public void adminClearDB() {
         controller.adminClearDB();
     }
 
     public void loginDialog() {
         JTextField xField = new JTextField(10);
-        JTextField yField = new JPasswordField(10);  // hidden characters
+        JTextField yField = new JPasswordField(10);  // hidden characters of password
 
         JPanel myPanel = new JPanel();
         myPanel.setLayout(new BoxLayout(myPanel, BoxLayout.Y_AXIS));
@@ -155,7 +158,7 @@ public class View extends JFrame {
             public void actionPerformed(ActionEvent ae) {
                final String link = "https://github.com/abrakadabra911/Sokoban";
                 JLabel label = new JLabel("<html>" +
-                        "This Sokoban-game was created by Aliaksei Zayats, using some java " +
+                                "This Sokoban-game was created by Aliaksei Zayats, using some java " +
                                 "<br/>technologies and patterns like: Maven, MVC, embedded database H2 (for game progress)." +
                                 "<br/>email: aliaksei.zayats@gmail.com" +
                                 "<br/>All the source code you can find at: <u>"

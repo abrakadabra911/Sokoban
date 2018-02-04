@@ -3,14 +3,12 @@ package Sokoban.controller;
 import Sokoban.model.Direction;
 
 public interface EventListener {
-    void move(Direction direction);  //передвинуть объект в определенном направлении.
 
-    void restart();//– начать заново текущий уровень.
+    void move(Direction direction);  // move object to certain direction
 
-    void startNextLevel();// – начать следующий уровень.
+    void restart();                  // restart current level
 
-    void levelCompleted(int level);// – уровень с номером level завершён.
+    void startNextLevel();
 
-
-
+    void levelCompleted(int level);  // action after level is completed
 }

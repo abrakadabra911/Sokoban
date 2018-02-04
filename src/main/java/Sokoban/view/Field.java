@@ -29,6 +29,7 @@ public class Field extends JPanel {
         if (confirm == 0) eventListener.restart();
     }
 
+    // drawing of main field and all objects
     @Override
     public void paint(Graphics g) {
         Set<GameObject> allGameObjects = view.getGameObjects().getAll();
@@ -36,9 +37,7 @@ public class Field extends JPanel {
         Player player = view.getGameObjects().getPlayer();
         allGameObjects.remove(player);
         allGameObjects.removeAll(homes);
-        //   g.setColor(new Color(230, 220, 200));
-
-        BufferedImage background = null;
+          BufferedImage background = null;
         String RESOURCE_PATH = getClass().getPackage().getName()
                 .replaceAll("\\.", "/")
                 .replace("Sokoban/view", "pic/Background.png");
@@ -47,8 +46,6 @@ public class Field extends JPanel {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        //   g.fillRect(0, 0, 540, 580);
         g.drawImage(background, 0, 0, null);
         g.setColor(new Color(112, 146, 190));
         g.setFont(new Font("MyFont", Font.ITALIC, 12));
@@ -59,7 +56,7 @@ public class Field extends JPanel {
         g.drawString("level: " + view.getCurrentLevel(), 5, 550);
         for (GameObject object : allGameObjects) object.draw(g);
         for (Home home : homes) home.draw(g); // we need to have homes draw above boxes
-        player.draw(g);// we need to have player draw above homes
+        player.draw(g);                       // we need to have player draw above homes
     }
 
 
@@ -101,6 +98,7 @@ public class Field extends JPanel {
                 buffer = e.getKeyChar();
         }
 
+        // "Alt + D" permit to clear DataBase only if username is "admin"
         @Override
         public void keyReleased(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ALT) {
